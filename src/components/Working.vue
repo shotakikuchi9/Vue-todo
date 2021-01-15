@@ -21,11 +21,6 @@
 <script>
 export default {
   props: ['tasks'],
-  data() {
-    return{
-
-    }
-  },
   computed: {
     workingTasks: function() {
       return this.tasks.filter(task => task.state === '作業中')
