@@ -59,9 +59,13 @@ export default {
       this.content = '';
     },
      deleteTask(index) {
-      const selectedTaskIndex = this.tasks.indexOf(this.selectedTasks[index])
-      this.selectedTasks.splice(index,1);
-      this.tasks.splice(selectedTaskIndex,1);
+      if(this.currentStatus === '全て') {
+        this.tasks.splice(index,1)
+      } else {
+        const selectedTaskIndex = this.tasks.indexOf(this.selectedTasks[index])
+        this.selectedTasks.splice(index,1);
+        this.tasks.splice(selectedTaskIndex,1);
+      }
 
     },
     changeStatus(index) {
