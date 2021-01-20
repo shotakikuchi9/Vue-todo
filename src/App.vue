@@ -1,13 +1,15 @@
 <template>
     <div id="app">
       <h1>Todoリスト</h1>
+      <p>{{currentStatus}}</p>
     <div>
       <label><input type="radio" value="全て" name="status" checked @click="currentStatus = '全て'">全て</label>
       <label><input type="radio" value="作業中" name="status" @click="currentStatus = '作業中'">作業中</label>
       <label><input type="radio" value="完了" name="status" @click="currentStatus = '完了'">完了</label>
     </div>
     <div>                       
-      <table v-if="currentStatus === '全て'">
+      <!-- <table v-if="currentStatus === '全て'"> -->
+      <table>
         <thead>
           <tr>
             <th>ID</th>
@@ -16,7 +18,7 @@
             <th></th>
           </tr>
         </thead>
-        <tbody v-for="(task, index) in tasks" :key="index">
+        <tbody v-for="(task, index) in selectedTasks(currentStatus)" :key="index">
           <tr>
             <td>{{index}}</td>
             <td>{{task.content}}</td>
@@ -26,7 +28,7 @@
         </tbody>
       </table>
 
-      <table v-else-if="currentStatus === '作業中' ">
+      <!-- <table v-else-if="currentStatus === '作業中' ">
         <thead>
           <tr>
             <th>ID</th>
@@ -62,7 +64,7 @@
             <td><button @click="deleteCompleteTask(index)">削除</button></td>
           </tr>
         </tbody>
-      </table>
+      </table> -->
 
       <h2>新規タスクの追加</h2>  
     </div>                          
@@ -85,11 +87,16 @@ export default {
     }
   },
   computed: {
-    workingTasks: function() {
-      return this.tasks.filter(task => task.state === '作業中')
-    },
-     completeTasks: function() {
-       return this.tasks.filter(task => task.state === '完了');
+    // workingTasks: function() {
+    //   return this.tasks.filter(task => task.state === '作業中')
+    // },
+    //  completeTasks: function() {
+    //    return this.tasks.filter(task => task.state === '完了');
+    // }
+    selectedTasks: function() {
+      return function(currentStatus) {
+        return this.tasks.filter(task => task.state === currentStatus)
+      }
     }
   },
   methods: {
